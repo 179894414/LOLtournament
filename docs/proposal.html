@@ -110,9 +110,49 @@
 <h1><span class="header-section-number">Chapter 2</span> Proposal<a href="proposal.html#proposal" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="research-topic" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Research topic<a href="proposal.html#research-topic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Introduction:
+The project is about League of Legends (LOL), a worldwide popular Multiplayer Online Battle Arena (MOBA) game.
+Riot Game, the company that develops LOL, holds official tournaments each year.
+There are totally 12 divisions of leagues from 12 different countries worldwide. Among these 12 divisions, there are four major divisions, in which the competitive levels are the highest, as well as the degree of professionalism and the arrangements of tournaments are the most standardized and procedural.</p>
+<p>The four major divisions are:
+LPL, China;
+LCK, South Korea;
+LCS, North America;
+LEC, Europe.</p>
+<p>There are four major seasons in each year:
+Spring Season;
+Mid-Season Invitational (MSI);
+Summer Season;
+World Championship.</p>
+<p>Spring and summer season tournaments are hold domestically in each division;
+MSI and World are international tournaments where eligible teams from each division gather together and compete each other to get the final world champion.</p>
+<p>Our project will focus on official tournaments data from the four major divisions in different seasons.</p>
+<p>Research topic:</p>
+<p>Research topic I:
+How does data of each team in LPL change across different seasons, for example, compare the winning rate, total kills, kill-to-death ratio, baron control rate, etc., of each team in different seasons.</p>
+<p>(Since we both are fans of LPL, so the first topic is focused on LPL.)</p>
+<p>Like all other sports, conditions of players have big impact on their performances. It’s common that one player has his best condition in one time period, while he doesn’t play that well in other time period. Therefore, this encourages us to compare the data across different time period.</p>
+<p>Besides conditions, each version update of LOL also play an important tole in tournament. For example, it’s possible that in one game version, conservative characters are prior than aggressive characters, and thus, performance of players, who have their own specialized characters, will be largely influenced by different updates. Since updates always happen through time, so competition data of different teams always varies with time.</p>
+<p>Research topic II:
+How does tournament data compare across different divisions in spring and summer seasons?</p>
+<p>As mentioned before, spring and summer seasons are hold domestically in each division. In this part, we will consider each division as a whole and compare data of different divisions in these two domestic season.
+Different divisions have their own preferred competition strategies and styles, for example, one division can be more conservative or aggressive than the others. Therefore, the preferred characters, total kills, game duration, etc., vary a lot across different division. This encourages us to compare and contrast data in different divisions.</p>
+<p>Research topic III:
+How does tournament data compare across different teams in World Championship 2022?</p>
+<p>Among four seasons, World Championship is the one which weighted most. Each team will need to win the ticket to World in their own divisions first. Therefore, total number of teams that can attend World are limited. We would like to focus on the 4 teams who finally come to semi-final to see how they are different from each other.</p>
 </div>
 <div id="data-availability" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> Data availability<a href="proposal.html#data-availability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Data:</p>
+<p>We looked up various websites that provides LOL tournament data e.g. <a href="https://escharts.com/tournaments/lol" class="uri">https://escharts.com/tournaments/lol</a>. Most of them are not posted by Riot, the company that owns the game and tournament, as an official data source, we locked on 2 main websites as our sources for the project. They are <a href="https://lol.fandom.com/wiki/League_of_Legends_Esports_Wiki" class="uri">https://lol.fandom.com/wiki/League_of_Legends_Esports_Wiki</a> and <a href="https://lpl.qq.com/es/data/" class="uri">https://lpl.qq.com/es/data/</a>. The first is officially warranted as reliable community use (2022) resources and the second is an official website.</p>
+<p>lolwiki is owned by fandom and lpl data is owned by Tencent, which bought Riot company in 2015 and thus officially owns and runs the game.</p>
+<p>The data is processed either by fandom or Tencent, based on LDP (LOL Esports Data Portal) from unreadable first-of-kind data into readable data. Where raw-data here refers to 2500 GB of uncompressed data per game.(2022) Which indicates the difficulty of interpreting completely raw game data.</p>
+<p>The data is available from the two websites indicated above as pictures, charts, and strings.</p>
+<p>We will mainly read in the data from websites as .cvs files and read these cvs files in R.</p>
+<p>We will focus on using <a href="https://lpl.qq.com/es/data/" class="uri">https://lpl.qq.com/es/data/</a> as this is run by the official company and we interests more on LPL teams (this website focuses on LPL game datas and also includes world championship data across years). So is we have any question, we can contact Tencent on the official website. LeagueWiki(Fandom) is also available from <a href="https://support.fandom.com/hc/en-us/requests/new" class="uri">https://support.fandom.com/hc/en-us/requests/new</a>.</p>
+<p>As mentioned above, some data are presented in forms of pictures which are not strings or numbers that are directly accessible by the machine, so we might need to omit some data or try to process pictures depending on their importance. LPL data are presented in Chinese as this is a Chinese website so we need to work on translating the data if needed.</p>
+<p>Citation:
+<a href="https://lolesports.com/article/dev-diary-introducing-the-new-lol-esports-data-portal/bltf694d66e32ce380a" class="uri">https://lolesports.com/article/dev-diary-introducing-the-new-lol-esports-data-portal/bltf694d66e32ce380a</a></p>
 
 </div>
 </div>
