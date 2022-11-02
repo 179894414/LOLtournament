@@ -1,6 +1,6 @@
 --- 
-title: "YOUR TITLE HERE"
-author: "YOUR NAMES HERE"
+title: "LOL Tournament Data Analysis"
+author: "Tongni Chem, Tao Yu"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
