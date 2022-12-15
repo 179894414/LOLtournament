@@ -1,8 +1,69 @@
+```{r}
+library(tidyverse)
+```
+
 # Data 
 
 ## Sources
+The following data collected statistics for LPL teams' performances from 2013 to 2022. The data is collected from  Oracle Exilar, an officially warranted data source for LOL game statistics. The website url is https://oracleselixir.com/stats/teams/byTournament.
 
+```{r}
+LPL_stats_2013_SP <- read.csv(file = 'data/LPL teams/2013 Spring.csv')
+LPL_stats_2013_SU <- read.csv(file = 'data/LPL teams/2013 Summer.csv')
+LPL_stats_2014_SP <- read.csv(file = 'data/LPL teams/2014 Spring.csv')
+LPL_stats_2014_SU <- read.csv(file = 'data/LPL teams/2014 Summer.csv')
+LPL_stats_2015_SP <- read.csv(file = 'data/LPL teams/2015 Spring.csv')
+LPL_stats_2015_SU <- read.csv(file = 'data/LPL teams/2015 Summer.csv')
+LPL_stats_2016_SP <- read.csv(file = 'data/LPL teams/2016 Spring.csv')
+LPL_stats_2016_SU <- read.csv(file = 'data/LPL teams/2016 Summer.csv')
+LPL_stats_2017_SP <- read.csv(file = 'data/LPL teams/2017 Spring.csv')
+LPL_stats_2017_SU <- read.csv(file = 'data/LPL teams/2017 Summer.csv')
+LPL_stats_2018_SP <- read.csv(file = 'data/LPL teams/2018 Spring.csv')
+LPL_stats_2018_SU <- read.csv(file = 'data/LPL teams/2018 Summer.csv')
+LPL_stats_2019_SP <- read.csv(file = 'data/LPL teams/2019 Spring.csv')
+LPL_stats_2019_SU <- read.csv(file = 'data/LPL teams/2019 Summer.csv')
+LPL_stats_2020_SP <- read.csv(file = 'data/LPL teams/2020 Spring.csv')
+LPL_stats_2020_SU <- read.csv(file = 'data/LPL teams/2020 Summer.csv')
+LPL_stats_2021_SP <- read.csv(file = 'data/LPL teams/2021 Spring.csv')
+LPL_stats_2021_SU <- read.csv(file = 'data/LPL teams/2021 Summer.csv')
+LPL_stats_2022_SP <- read.csv(file = 'data/LPL teams/2022 Spring.csv')
+LPL_stats_2022_SU <- read.csv(file = 'data/LPL teams/2022 Summer.csv')
+```
 ## Cleaning / transformation
+For LPL team statistics, we will identify the time of statistics by adding a column indicating which season statistics the data reflects and finally combine it into a large table.
+```{R}
+LPL_stats_2013_SP$Season <- '2013 Spring'
+LPL_stats_2013_SU$Season <- '2013 Summer'
+LPL_stats_2014_SP$Season <- '2014 Spring'
+LPL_stats_2014_SU$Season <- '2014 Summer'
+LPL_stats_2015_SP$Season <- '2015 Spring'
+LPL_stats_2015_SU$Season <- '2015 Summer'
+LPL_stats_2016_SP$Season <- '2016 Spring'
+LPL_stats_2016_SU$Season <- '2016 Summer'
+LPL_stats_2017_SP$Season <- '2017 Spring'
+LPL_stats_2017_SU$Season <- '2017 Summer'
+LPL_stats_2018_SP$Season <- '2018 Spring'
+LPL_stats_2018_SU$Season <- '2018 Summer'
+LPL_stats_2019_SP$Season <- '2019 Spring'
+LPL_stats_2019_SU$Season <- '2019 Summer'
+LPL_stats_2020_SP$Season <- '2020 Spring'
+LPL_stats_2020_SU$Season <- '2020 Summer'
+LPL_stats_2021_SP$Season <- '2021 Spring'
+LPL_stats_2021_SU$Season <- '2021 Summer'
+LPL_stats_2022_SP$Season <- '2022 Spring'
+LPL_stats_2022_SU$Season <- '2022 Summer'
 
+LPL_stats_teams <- rbind(LPL_stats_2013_SP,LPL_stats_2013_SU,
+                         LPL_stats_2014_SP,LPL_stats_2014_SU,
+                         LPL_stats_2015_SP,LPL_stats_2015_SU,
+                         LPL_stats_2016_SP,LPL_stats_2016_SU,
+                         LPL_stats_2017_SP,LPL_stats_2017_SU,
+                         LPL_stats_2018_SP,LPL_stats_2018_SU,
+                         LPL_stats_2019_SP,LPL_stats_2019_SU,
+                         LPL_stats_2020_SP,LPL_stats_2020_SU,
+                         LPL_stats_2021_SP,LPL_stats_2021_SU,
+                         LPL_stats_2022_SP,LPL_stats_2022_SU
+                         )
+```
 ## Missing value analysis
 
