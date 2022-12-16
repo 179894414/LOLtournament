@@ -1,19 +1,55 @@
 ```{r}
+library(dplyr)
 library(tidyverse)
+library(rvest)
+library(ggplot2)
+library(DataExplorer)
+library(data.table)
 ```
+# Data
 
-# Data 
+All of our data comes from three sources:
+
+LPL official data webpage;
+
+Fandom Wiki;
+
+Oracle Exilar.
+
+
+
+The data of LPL related all comes from LPL official data webpage. 
+
+
+There is no public official data webpage for statistics of tournaments from other divisions. 
+
+From LOL esports offical's statements:
+
+"Last year, we rolled out the LoL Esports Data Portal to Riot-run professional LoL Esports regions, debuting the private and secure scrim data feature. Now, the LDP also supports community use cases, such as Leaguepedia and Oracle’s Elixir, by providing scalable and sustainable access to data such as match history data, replays, and more..."
+
+
+Fandom Wiki and Oracle Exilar are officially warrented community use sites by LOL esports offical. 
+
 
 ## Sources
-We collected statistics for LPL teams' performances from 2013 to 2022 game seasons. The data is collected from  Oracle Exilar, an officially warranted data source for LOL game statistics. The website url is https://oracleselixir.com/stats/teams/byTournament.
+
+### LPL 
+
+We collected statistics for LPL from LPL offical data webpage. The website url is https://lpl.qq.com/es/data/.
+
+
+Url for 2022 spring stat: https://lpl.qq.com/esnew/data/rank.shtml?iGameId=167&sGameType=1,5
+
+Url for 2022 summer stat: https://lpl.qq.com/esnew/data/rank.shtml?iGameId=167&sGameType=7,8,9
+.....
+
+There includes teams stat, players' personal stat, champion stat for each season.
+
+#### LPL team stat
+
+Firstly, We collected statistics for LPL teams' performances from 2016 to 2022 game seasons. 
 
 ```{r}
-LPL_stats_2013_SP <- read.csv(file = 'data/LPL teams/2013 Spring.csv')
-LPL_stats_2013_SU <- read.csv(file = 'data/LPL teams/2013 Summer.csv')
-LPL_stats_2014_SP <- read.csv(file = 'data/LPL teams/2014 Spring.csv')
-LPL_stats_2014_SU <- read.csv(file = 'data/LPL teams/2014 Summer.csv')
-LPL_stats_2015_SP <- read.csv(file = 'data/LPL teams/2015 Spring.csv')
-LPL_stats_2015_SU <- read.csv(file = 'data/LPL teams/2015 Summer.csv')
 LPL_stats_2016_SP <- read.csv(file = 'data/LPL teams/2016 Spring.csv')
 LPL_stats_2016_SU <- read.csv(file = 'data/LPL teams/2016 Summer.csv')
 LPL_stats_2017_SP <- read.csv(file = 'data/LPL teams/2017 Spring.csv')
@@ -29,15 +65,94 @@ LPL_stats_2021_SU <- read.csv(file = 'data/LPL teams/2021 Summer.csv')
 LPL_stats_2022_SP <- read.csv(file = 'data/LPL teams/2022 Spring.csv')
 LPL_stats_2022_SU <- read.csv(file = 'data/LPL teams/2022 Summer.csv')
 ```
+
+#### LPL player stat
+
+Similarly, we collected LPL players stats for the most recent season, summer 2022.
+
+```{r}
+LPL_player_stats_2022_SU <-read.csv(file = 'data/Player/LPL Player Stats 2022 Summer.csv')
+```
+
+#### LPL champion stat
+
+We collected champion statistics for LPL teams from 2013 to 2022 game seasons.
+
+```{r}
+LPL_cham_2013_SP <- read.csv(file = 'data/LPL champions/LPL 2013 Spring - Champion Stats.csv')
+LPL_cham_2013_SU <- read.csv(file = 'data/LPL champions/LPL 2013 Summer - Champion Stats.csv')
+LPL_cham_2014_SP <- read.csv(file = 'data/LPL champions/LPL 2014 Spring - Champion Stats.csv')
+LPL_cham_2014_SU <- read.csv(file = 'data/LPL champions/LPL 2014 Summer - Champion Stats.csv')
+LPL_cham_2015_SP <- read.csv(file = 'data/LPL champions/LPL 2015 Spring - Champion Stats.csv')
+LPL_cham_2015_SU <- read.csv(file = 'data/LPL champions/LPL 2015 Summer - Champion Stats.csv')
+LPL_cham_2016_SP <- read.csv(file = 'data/LPL champions/LPL 2016 Spring - Champion Stats.csv')
+LPL_cham_2016_SU <- read.csv(file = 'data/LPL champions/LPL 2016 Summer - Champion Stats.csv')
+LPL_cham_2017_SP <- read.csv(file = 'data/LPL champions/LPL 2017 Spring - Champion Stats.csv')
+LPL_cham_2017_SU <- read.csv(file = 'data/LPL champions/LPL 2017 Summer - Champion Stats.csv')
+LPL_cham_2018_SP <- read.csv(file = 'data/LPL champions/LPL 2018 Spring - Champion Stats.csv')
+LPL_cham_2018_SU <- read.csv(file = 'data/LPL champions/LPL 2018 Summer - Champion Stats.csv')
+LPL_cham_2019_SP <- read.csv(file = 'data/LPL champions/LPL 2019 Spring - Champion Stats.csv')
+LPL_cham_2019_SU <- read.csv(file = 'data/LPL champions/LPL 2019 Summer - Champion Stats.csv')
+LPL_cham_2020_SP <- read.csv(file = 'data/LPL champions/LPL 2020 Spring - Champion Stats.csv')
+LPL_cham_2020_SU <- read.csv(file = 'data/LPL champions/LPL 2020 Summer - Champion Stats.csv')
+LPL_cham_2021_SP <- read.csv(file = 'data/LPL champions/LPL 2021 Spring - Champion Stats.csv')
+LPL_cham_2021_SU <- read.csv(file = 'data/LPL champions/LPL 2021 Summer - Champion Stats.csv')
+LPL_cham_2022_SP <- read.csv(file = 'data/LPL champions/LPL 2022 Spring - Champion Stats.csv')
+LPL_cham_2022_SU <- read.csv(file = 'data/LPL champions/LPL 2022 Summer - Champion Stats.csv')
+```
+
+### Other divisions
+
+#### Player stats
+
+We collected Player stats for 4 major divisions from most recent season from Fandom Wiki. The url is (for example devision 'ABC'):https://lol.fandom.com/wiki/ABC/2022_Season/Summer_Season/Player_Statistics
+
+```{r}
+LCS_stats_player <- read_html("data/Player/LCS 2022 Summer - Player Statistics - Leaguepedia _ League of Legends Esports Wiki.html") %>% html_table()
+LCK_stats_player <- read_html("data/Player/LCK 2022 Summer - Player Statistics - Leaguepedia _ League of Legends Esports Wiki.html") %>% html_table()
+LPL_stats_player <- read_html("data/Player/LPL 2022 Summer - Player Statistics - Leaguepedia _ League of Legends Esports Wiki.html") %>% html_table()
+LEC_stats_player <- read_html("data/Player/LEC 2022 Summer - Player Statistics - Leaguepedia _ League of Legends Esports Wiki.html") %>% html_table()
+```
+
+#### Champion stats
+
+We collected champion stats for 4 major divisions from most recent season from Fandom Wiki. The url is (for example devision 'ABC'):https://lol.fandom.com/wiki/ABC/2022_Season/Summer_Season/Champion_Statistics
+
+```{r}
+LCS_stats_champ <- read_html("data/Champion/LCS 2022 Summer - Champion Statistics - Leaguepedia _ League of Legends Esports Wiki.html") %>% html_table()
+LCK_stats_champ <- read_html("data/Champion/LCK 2022 Summer - Champion Statistics - Leaguepedia _ League of Legends Esports Wiki.html") %>% html_table()
+LPL_stats_champ <- read_html("data/Champion/LPL 2022 Summer - Champion Statistics - Leaguepedia _ League of Legends Esports Wiki.html") %>% html_table()
+LEC_stats_champ <- read_html("data/Champion/LEC 2022 Summer - Champion Statistics - Leaguepedia _ League of Legends Esports Wiki.html") %>% html_table()
+```
+
+#### Faker (one famous player) stat
+
+We collected statistics for player "Faker" from Oracle Exilar. The website is: https://oracleselixir.com/player/Faker/statsByYear
+
+```{r}
+faker <- read.csv(file = 'data/Player/faker.csv')
+```
+
+#### Worlds
+
+This is a data set about how many teams from different divisions entering the World championships, and in which round, they were finally eliminated. There is no existed data set that summarize these information, so we manually enter the values since there are not that much data.
+
+```{r}
+worlds <- read.csv(file = 'data/World/worlds.csv', header= TRUE)
+colnames(worlds) <- c("Class1","Class2","Freq")
+```
+
 ## Cleaning / transformation
+
+### LPL 
+
+For all data collected from LPL website, prior to importing the data, we modified the csv files by translating Chinese into corresponding English terms.
+
+#### LPL team
+
 For LPL team statistics, we will identify the time of statistics by adding a column indicating which season statistics the data reflects and finally combine it into a large table.
+
 ```{R}
-LPL_stats_2013_SP$Season <- '2013 Spring'
-LPL_stats_2013_SU$Season <- '2013 Summer'
-LPL_stats_2014_SP$Season <- '2014 Spring'
-LPL_stats_2014_SU$Season <- '2014 Summer'
-LPL_stats_2015_SP$Season <- '2015 Spring'
-LPL_stats_2015_SU$Season <- '2015 Summer'
 LPL_stats_2016_SP$Season <- '2016 Spring'
 LPL_stats_2016_SU$Season <- '2016 Summer'
 LPL_stats_2017_SP$Season <- '2017 Spring'
@@ -53,10 +168,7 @@ LPL_stats_2021_SU$Season <- '2021 Summer'
 LPL_stats_2022_SP$Season <- '2022 Spring'
 LPL_stats_2022_SU$Season <- '2022 Summer'
 
-LPL_stats_teams <- rbind(LPL_stats_2013_SP,LPL_stats_2013_SU,
-                         LPL_stats_2014_SP,LPL_stats_2014_SU,
-                         LPL_stats_2015_SP,LPL_stats_2015_SU,
-                         LPL_stats_2016_SP,LPL_stats_2016_SU,
+LPL_stats_teams <- rbind(LPL_stats_2016_SP,LPL_stats_2016_SU,
                          LPL_stats_2017_SP,LPL_stats_2017_SU,
                          LPL_stats_2018_SP,LPL_stats_2018_SU,
                          LPL_stats_2019_SP,LPL_stats_2019_SU,
@@ -64,6 +176,213 @@ LPL_stats_teams <- rbind(LPL_stats_2013_SP,LPL_stats_2013_SU,
                          LPL_stats_2021_SP,LPL_stats_2021_SU,
                          LPL_stats_2022_SP,LPL_stats_2022_SU
                          )
+LPL_stats_teams["winrate"]=round(LPL_stats_teams["W"]/LPL_stats_teams["GP"],3)*100
 ```
+
+#### LPL champion 
+
+Similar as LPL team.
+
+```{R}
+LPL_cham_2013_SP$Year <- '2013'
+LPL_cham_2013_SU$Year <- '2013'
+LPL_cham_2014_SP$Year <- '2014'
+LPL_cham_2014_SU$Year <- '2014'
+LPL_cham_2015_SP$Year <- '2015'
+LPL_cham_2015_SU$Year <- '2015'
+LPL_cham_2016_SP$Year <- '2016'
+LPL_cham_2016_SU$Year <- '2016'
+LPL_cham_2017_SP$Year <- '2017'
+LPL_cham_2017_SU$Year <- '2017'
+LPL_cham_2018_SP$Year <- '2018'
+LPL_cham_2018_SU$Year <- '2018'
+LPL_cham_2019_SP$Year <- '2019'
+LPL_cham_2019_SU$Year <- '2019'
+LPL_cham_2020_SP$Year <- '2020'
+LPL_cham_2020_SU$Year <- '2020'
+LPL_cham_2021_SP$Year <- '2021'
+LPL_cham_2021_SU$Year <- '2021'
+LPL_cham_2022_SP$Year <- '2022'
+LPL_cham_2022_SU$Year <- '2022'
+
+LPL_cham <- rbind(LPL_cham_2022_SP,LPL_cham_2022_SU,
+                         LPL_cham_2021_SP,LPL_cham_2021_SU,
+                         LPL_cham_2020_SP,LPL_cham_2020_SU,
+                         LPL_cham_2019_SP,LPL_cham_2019_SU,
+                         LPL_cham_2018_SP,LPL_cham_2018_SU,
+                         LPL_cham_2017_SP,LPL_cham_2017_SU,
+                         LPL_cham_2016_SP,LPL_cham_2016_SU,
+                         LPL_cham_2015_SP,LPL_cham_2015_SU,
+                         LPL_cham_2014_SP,LPL_cham_2014_SU,
+                         LPL_cham_2013_SP,LPL_cham_2013_SU
+                         )
+```
+
+#### LPL player
+
+For player stats, the provided KDA was rounded too much, so we will calculated KDA based on K,D,A, also KDA formats were strings by format 'total(average)' , we will extract total and convert to int.
+
+```{r}
+LPL_player_stats_2022_SU <- LPL_player_stats_2022_SU %>% 
+                        filter(GP>=10)   %>%
+                        mutate(
+                          K=as.integer(sub("[(].*[)]", "", K)),
+                          D=as.integer(sub("[(].*[)]", "", D)),
+                          A=as.integer(sub("[(].*[)]", "", A)),
+                          KDA=(K+A)/D
+                        )
+```
+
+### Other divisions
+
+As we are reading from an html, the datawill contain extra information we do not need, so we will modify by slicing up the list and change column names, and add division name for both champion and player statistics.
+
+#### Champion
+
+```{r}
+LCS_stats_champ<- LCS_stats_champ[[5]][4:104,][,1:22]
+names(LCS_stats_champ)<-LCS_stats_champ[1,]
+LCS_stats_champ<-LCS_stats_champ[-1,]
+LCS_stats_champ$'Devision'<-'LCS'
+
+LEC_stats_champ<- LEC_stats_champ[[5]][4:103,][,1:22]
+names(LEC_stats_champ)<-LEC_stats_champ[1,]
+LEC_stats_champ<-LEC_stats_champ[-1,]
+LEC_stats_champ$'Devision'<-'LEC'
+
+LCK_stats_champ<- LCK_stats_champ[[5]][4:112,][,1:22]
+names(LCK_stats_champ)<-LCK_stats_champ[1,]
+LCK_stats_champ<-LCK_stats_champ[-1,]
+LCK_stats_champ$'Devision'<-'LCK'
+
+LPL_stats_champ<- LPL_stats_champ[[5]][4:116,][,1:22]
+names(LPL_stats_champ)<-LPL_stats_champ[1,]
+LPL_stats_champ<-LPL_stats_champ[-1,]
+LPL_stats_champ$'Devision'<-'LPL'
+
+stats_champ<-rbind(LCS_stats_champ,LEC_stats_champ,LCK_stats_champ,LPL_stats_champ)
+colnames(stats_champ)[2] <- "GP"
+colnames(stats_champ)[5] <- "P"
+colnames(stats_champ)[16] <- "GOLD"
+```
+
+#### Player
+
+```{r}
+LCS_stats_player<- LCS_stats_player[[5]][4:65,][,2:20]
+names(LCS_stats_player)<-LCS_stats_player[1,]
+LCS_stats_player<-LCS_stats_player[-1,]
+colnames(LCS_stats_player)[1] <- "Player"
+LCS_stats_player$'Devision'<-'LCS'
+
+LEC_stats_player<- LEC_stats_player[[5]][4:57,][,2:20]
+names(LEC_stats_player)<-LEC_stats_player[1,]
+LEC_stats_player<-LEC_stats_player[-1,]
+colnames(LEC_stats_player)[1] <- "Player"
+LEC_stats_player$'Devision'<-'LEC'
+
+LCK_stats_player<- LCK_stats_player[[5]][4:66,][,2:20]
+names(LCK_stats_player)<-LCK_stats_player[1,]
+LCK_stats_player<-LCK_stats_player[-1,]
+colnames(LCK_stats_player)[1] <- "Player"
+LCK_stats_player$'Devision'<-'LCK'
+
+LPL_stats_player<- LPL_stats_player[[5]][4:120,][,2:20]
+names(LPL_stats_player)<-LPL_stats_player[1,]
+LPL_stats_player<-LPL_stats_player[-1,]
+colnames(LPL_stats_player)[1] <- "Player"
+LPL_stats_player$'Devision'<-'LPL'
+
+stats_player<-rbind(LCS_stats_player,LEC_stats_player,LCK_stats_player,LPL_stats_player)
+colnames(stats_player)[2]<-'GP'
+```
+
+
+### All dataset
+
+For all of datasets above, there are stats that have numerical meaning but appears to be in character data type.
+
+For example, wining rate in all datasets is character data type with form "xx.xx%". 
+
+As there are many columns in different datasets that has this property, and we will not necessarily use all of them, so we will convert those values into numerical values when needed. The following is an example of code for transformation:
+
+```{r}
+# Don't run here.
+# LPL_teams = LPL_teams %>% mutate_at(c(11,15,21,24,25,26), funs(as.numeric(gsub("%", "", ., fixed = TRUE))/100))
+```
+
+
 ## Missing value analysis
 
+As its really hard to collect game statistics (these statistics are often summary of individual acts player performs over the game), some columns might miss values depends on the season if no one is there to collect those values, the following is the missing value charts for the data sets we eventually used to construct the graphs.
+
+```{r}
+plot_missing_2 <-
+function (data, group = list(Good = 0.05, Okay = 0.4, Poor = 0.8, 
+  Scarce =  1), geom_label_args = list(), title = NULL, ggtheme = theme_gray(), 
+theme_config = list(legend.position = c("bottom"))) 
+{
+  pct_missing <- Band <- NULL
+  missing_value <- data.table(profile_missing(data))
+  group <- group[sort.list(unlist(group))]
+  invisible(lapply(seq_along(group), function(i) {
+    if (i == 1) {
+      missing_value[pct_missing <= group[[i]], `:=`(Band,
+         names(group)[i])]
+    } else {
+  missing_value[pct_missing > group[[i - 1]] & pct_missing <= 
+     group[[i]], `:=`(Band, names(group)[i])]
+    }
+}))
+  output <- ggplot(missing_value, aes_string(x = "feature", 
+    y = "num_missing", fill = "Band")) + geom_bar(stat = "identity") + 
+   scale_fill_manual("Band", values = c("Good"="green2","Okay"="gold","Poor"="darkorange","Scarce"="firebrick2")) + coord_flip() + xlab("Features") + 
+   ylab("Missing Rows")
+  geom_label_args_list <- list(mapping = aes(label = paste0(round(100 * 
+    pct_missing, 2), "%")))
+  output <- output + do.call("geom_label", c(geom_label_args_list, 
+     geom_label_args))
+  class(output) <- c("single", class(output))
+  plotDataExplorer(plot_obj = output, title = title, ggtheme = ggtheme, 
+   theme_config = theme_config)
+}
+```
+
+### LPL team stat
+
+```{r}
+LPL_stats_teams[LPL_stats_teams=='-']<-NA
+plot1<-plot_missing_2(LPL_stats_teams,geom_label_args = list(size = 2, label.padding = unit(0.2, "lines")))
+```
+Notice that those most important columns, green zone, like wining rate, KD, have no missing values since these are decisive data of a game so for every seasons, they will be collected and computed. 
+
+While for other columns, all rows in some specific seasons were not collected and computed at all. PPG was never collected in all seasons from 2016 to 2022.
+
+### LPL champion stat
+
+```{r}
+LPL_cham[LPL_cham=='-']<-NA
+plot1<-plot_missing_2(LPL_cham,geom_label_args = list(size = 2, label.padding = unit(0.1, "lines")))
+```
+
+### Four major division champion statstics
+ 
+```{r}
+stats_champ[stats_champ=='-']<-NA
+plot1<-plot_missing_2(stats_champ,geom_label_args = list(size = 2, label.padding = unit(0.1, "lines")))
+```
+
+Similar as LPL team missing values, those most important columns like, PB% (pick and ban), W (wining), L (losing), have no missing values, while other columns have missing rows in some seasons. 
+
+### Faker statistics
+
+```{r}
+faker[faker=='-']<-NA
+plot1<-plot_missing_2(faker,geom_label_args = list(size = 2, label.padding = unit(0.1, "lines")))
+```
+
+Similar as LPL team and champions. 
+
+### All player stat
+
+For all players' data set from both LPL and other divisions, there is no missing values.

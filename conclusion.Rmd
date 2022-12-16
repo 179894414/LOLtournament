@@ -1,2 +1,17 @@
 # Conclusion
 
+Our project investigate the relationship between different factors in the game, for example relationship between KD and wining rates. We also compare and contrast the data from different seasons and from different four major divisions. We successfully get some solid conclusions in our results, while there are also many limitations occur.
+
+
+Firstly, during our investigation on the relationship between different columns of data from games, we get some interesting visualization by applying parallel coordinates plots and PCA biplots on these multidimensional continuous variables, for example, we visualize some positive relationship between KD and wining rate. 
+
+While the limits are that we can only stop at relationship, we definitely would like to prove some correlation between each pair of columns since this can be a much stronger conclusion. Therefore, our future direction will be to investigate the causal correlation between factors by other statistics techniques.
+
+
+Secondly, we know that wining rate is a considerably important column among all data. Besides to see the relationship between wining rate and other factors, it would be great if we can predict the final wining rate during the live game with some current data, like current gold difference between two teams. This again needs investigation on the correlation between wining rate and other factors, and in addition, we need some prediction and modeling techniques from machine learning field. 
+
+
+Thirdly, in several parts of our project, we mention some popular claims, like wards contribute a lot to wining, lineup of the squard is decisive to victory. During our project, we try several methods to check if these claims hold. We cannot prove these claims by our techniques, while we cannot reject these claims either, because to investigate, for example, if wards is an influencing factor of wining rate, we need to control all other influencing factors of wining rate consistent. Therefore, in the future direction, we can use other techniques, such as propensity score matching, to prove or disprove these claims.
+
+
+Last but not least, during our compare and contrast of players' data from different divisions, we also get some interesting results, for example, LPL players' KDA is much higher than that of players from other divisions. In the future direction, we are also interested in, for example, given a player's stat, can we predict which division is he from. To do this, we also need modeling techniques to find important and distinct features of players from different divisions.
